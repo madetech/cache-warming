@@ -1,4 +1,4 @@
-# Cache Warming
+# Cache Warming [![Build Status](https://travis-ci.org/madetech/cache-warming.svg?branch=master)](https://travis-ci.org/madetech/cache-warming)
 
 ## Purpose
 
