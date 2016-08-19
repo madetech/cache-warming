@@ -5,6 +5,14 @@ switch (true) {
     case preg_match('/sitemap\.xml/', $uri, $matches):
         echo file_get_contents(__DIR__ . "/responses/sitemap.xml");
         break;
+    case preg_match('/timeout/', $uri, $matches):
+        sleep(40);
+        break;
+    case preg_match('/alive/', $uri, $matches):
+        echo 'ALIVE';
+
+        return;
+        break;
     default:
         break;
 }

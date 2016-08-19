@@ -40,6 +40,7 @@ trait HttpSimulator
             ],
             $pipes
         );
+        $this->spinOnSimulator($domain);
         $this->simulator = $process;
     }
 
@@ -80,5 +81,24 @@ trait HttpSimulator
     private function getRequestsPath()
     {
         return $this->getSimulatorPath() . 'requests/';
+    }
+
+    private function spinOnSimulator($domain)
+    {
+        $alive = false;
+        $i = 0;
+        while (!$alive) {
+            if ($i > 100) {
+                throw new \Exception('Cannot start Simulator');
+            }
+            \PHPUnit_Framework_Error_Warning::$enabled = false;
+            $response = @file_get_contents("http://$domain/alive/");
+            \PHPUnit_Framework_Error_Warning::$enabled = true;
+            if ($response === 'ALIVE') {
+                $alive = true;
+            }
+            usleep(250000);
+            $i++;
+        }
     }
 }
