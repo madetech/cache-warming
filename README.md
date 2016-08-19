@@ -24,4 +24,6 @@ Key contributions:
 
 * [Craig J. Bass](https://github.com/craigjbass)
 
+##License
 
+Licensed under [New BSD License](https://github.com/madetech/cache-warming/blob/master/LICENSE)
