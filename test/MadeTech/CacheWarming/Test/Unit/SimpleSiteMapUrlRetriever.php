@@ -3,7 +3,7 @@ namespace MadeTech\CacheWarming\Test\Unit;
 
 use MadeTech\CacheWarming\UrlRetriever;
 
-class SimpleSiteMapUrlRetriever implements UrlRetriever
+class SimpleSiteMapUrlRetriever extends UrlRetrieverStub implements UrlRetriever
 {
     const LOCATION = 'https://example.com/a/url/path/here/';
 

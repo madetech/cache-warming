@@ -8,4 +8,6 @@ interface CacheWarmerPresenter
     public function presentSiteMaps($siteMaps);
 
     public function presentSiteMapUrls($siteMapUrl, $urls);
+
+    public function presentUrlProcessed($url);
 }

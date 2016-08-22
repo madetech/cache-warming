@@ -36,6 +36,9 @@ class CacheWarmer
         foreach ($siteMaps as $siteMap) {
             $this->warmUpCacheForSite->warmUpSiteCache($siteMap, $presenter);
         }
+        $this->urlRetriever->finish(function ($url) use ($presenter) {
+            $presenter->presentUrlProcessed($url);
+        });
     }
 
     /**

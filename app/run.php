@@ -2,7 +2,7 @@
 <?php
 use MadeTech\CacheWarming\CacheWarmer;
 use MadeTech\CacheWarming\Config\ArrayConfigProvider;
-use MadeTech\CacheWarming\Gateway\FileGetContentsUrlRetriever;
+use MadeTech\CacheWarming\Gateway\GuzzleUrlRetriever;
 use MadeTech\CacheWarming\GetUrlsFromSiteMap;
 use MadeTech\CacheWarming\UseCase\CacheWarmerPresenter;
 use MadeTech\CacheWarming\WarmCacheOfOneUrl;
@@ -14,43 +14,34 @@ if(!defined('COMPOSER_LOADED') || !COMPOSER_LOADED) {
 
 class EchoingCacheWarmerPresenter implements CacheWarmerPresenter
 {
-    private $siteMapCount;
     /** @var int */
-    private $count;
+    private $count = 0;
 
-    /** @var int[] */
-    private $urls;
-
-    /** @var string */
-    private $siteMapUrl;
-
-    /** @var int[] */
-    private $siteMaps;
+    /** @var int */
+    private $numberProcessed = 0;
 
     public function presentVisitedUrl($url)
     {
-        $currentUrlIndex = $this->urls[$url] + 1;
-        $currentSiteMapIndex = $this->siteMaps[$this->siteMapUrl] + 1;
-        echo "$currentUrlIndex/{$this->count}, (Sitemap $currentSiteMapIndex/{$this->siteMapCount}): $url\n";
     }
 
     public function presentSiteMaps($siteMaps)
     {
-        $this->siteMaps = array_flip( $siteMaps );
-        $this->siteMapCount = count($siteMaps);
-        echo "Going to traverse $this->siteMapCount sitemap(s):\n";
-        foreach( $siteMaps as $siteMap ) {
-            echo "$siteMap\n";
-        }
-        echo "--\n\n";
+        $count = count($siteMaps);
+        echo "Going to traverse $count sitemap(s):\n";
+        echo implode("\n", $siteMaps), "\n--\n\n";
     }
 
     public function presentSiteMapUrls($siteMapUrl, $urls)
     {
-        $this->siteMapUrl = $siteMapUrl;
-        $this->urls = array_flip( $urls );
-        $this->count = count($urls);
-        echo "Going to warm cache of $this->count URL(s)\n";
+        $this->count += count($urls);
+        echo "Found $this->count URL(s) to warm\n";
+    }
+
+    public function presentUrlProcessed($url)
+    {
+        $index = $this->numberProcessed++;
+        $percentage = round(($index / $this->count) * 100);
+        echo "$percentage% $index/{$this->count}: $url\n";
     }
 }
 
@@ -64,7 +55,7 @@ $run = function () {
         $configFile = __DIR__ . '/config.php';
     }
 
-    $retriever = new FileGetContentsUrlRetriever;
+    $retriever = new GuzzleUrlRetriever;
     $cacheWarmer = new CacheWarmer(
         new WarmUpCacheForSiteMap(
             new GetUrlsFromSiteMap($retriever),

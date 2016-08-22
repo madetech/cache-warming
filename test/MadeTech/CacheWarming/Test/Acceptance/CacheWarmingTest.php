@@ -3,7 +3,7 @@ namespace MadeTech\CacheWarming\Test\Acceptance;
 
 use MadeTech\CacheWarming\CacheWarmer;
 use MadeTech\CacheWarming\Config;
-use MadeTech\CacheWarming\Gateway\FileGetContentsUrlRetriever;
+use MadeTech\CacheWarming\Gateway\GuzzleUrlRetriever;
 use MadeTech\CacheWarming\GetUrlsFromSiteMap;
 use MadeTech\CacheWarming\WarmCacheOfOneUrl;
 use MadeTech\CacheWarming\WarmUpCacheForSiteMap;
@@ -66,7 +66,7 @@ class CacheWarmingTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
         $this->simulatorSetUp();
-        $this->retriever = new FileGetContentsUrlRetriever();
+        $this->retriever = new GuzzleUrlRetriever();
         $this->warmUpCacheForSiteMap = new WarmUpCacheForSiteMap(
             new GetUrlsFromSiteMap($this->retriever),
             new WarmCacheOfOneUrl($this->retriever)

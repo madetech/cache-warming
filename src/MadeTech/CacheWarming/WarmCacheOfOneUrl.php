@@ -13,6 +13,6 @@ class WarmCacheOfOneUrl implements UseCase\WarmCacheOfOneUrl
 
     public function visit($url)
     {
-        $this->httpClient->get($url);
+        $this->httpClient->visit($url);
     }
 }

@@ -3,10 +3,10 @@
 namespace MadeTech\CacheWarming\Test\Unit\Gateway;
 
 
-use MadeTech\CacheWarming\Gateway\FileGetContentsUrlRetriever;
+use MadeTech\CacheWarming\Gateway\GuzzleUrlRetriever;
 use MadeTech\HttpSimulator;
 
-class FileGetContentsUrlRetrieverTest extends \PHPUnit_Framework_TestCase
+class GuzzleUrlRetrieverTest extends \PHPUnit_Framework_TestCase
 {
     const DEFAULT_TIMEOUT = 60;
 
@@ -17,6 +17,7 @@ class FileGetContentsUrlRetrieverTest extends \PHPUnit_Framework_TestCase
 
     private function setSocketTimeout($timeout)
     {
+        GuzzleUrlRetriever::$timeout = $timeout;
         ini_set('default_socket_timeout', $timeout);
     }
 
@@ -52,7 +53,7 @@ class FileGetContentsUrlRetrieverTest extends \PHPUnit_Framework_TestCase
         $this->setSocketTimeout(1);
         $this->assertDoesNotThrowException(function () {
             $domain = self::$domain;
-            (new FileGetContentsUrlRetriever())->get("http://$domain/timeout");
+            (new GuzzleUrlRetriever())->get("http://$domain/timeout");
         });
     }
 }

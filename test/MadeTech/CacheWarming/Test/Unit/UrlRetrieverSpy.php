@@ -3,7 +3,7 @@ namespace MadeTech\CacheWarming\Test\Unit;
 
 use MadeTech\CacheWarming\UrlRetriever;
 
-class UrlRetrieverSpy implements UrlRetriever
+class UrlRetrieverSpy extends UrlRetrieverStub implements UrlRetriever
 {
 
     /** @var string */

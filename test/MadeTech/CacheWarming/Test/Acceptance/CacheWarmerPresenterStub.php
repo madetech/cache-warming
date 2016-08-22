@@ -17,4 +17,9 @@ class CacheWarmerPresenterStub implements CacheWarmerPresenter
     {
 
     }
+
+    public function presentUrlProcessed($url)
+    {
+
+    }
 }

@@ -3,7 +3,7 @@ namespace MadeTech\CacheWarming\Test\Unit;
 
 use MadeTech\CacheWarming\UrlRetriever;
 
-class ComplexSiteMapUrlRetriever implements UrlRetriever
+class ComplexSiteMapUrlRetriever extends UrlRetrieverStub implements UrlRetriever
 {
     public function get($url)
     {

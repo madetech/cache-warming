@@ -29,6 +29,9 @@ class CacheWarmerTest extends \PHPUnit_Framework_TestCase implements WarmUpCache
     /** @var string[] */
     private $getRequestUrls = [];
 
+    /** @var boolean */
+    private $finishCalledOnUrlRetriever = false;
+
     public function warmUpSiteCache($siteMapUrl, CacheWarmerPresenter $presenter)
     {
         $this->siteMapUrls[] = $siteMapUrl;
@@ -71,6 +74,11 @@ class CacheWarmerTest extends \PHPUnit_Framework_TestCase implements WarmUpCache
         $this->config = $config;
     }
 
+    public function visit($url)
+    {
+        return $this->get($url);
+    }
+
     public function get($url)
     {
         $this->getRequestUrls[] = $url;
@@ -86,6 +94,11 @@ class CacheWarmerTest extends \PHPUnit_Framework_TestCase implements WarmUpCache
 </html>
 HTML;
 
+    }
+
+    public function finish(\Closure $onUrlVisited = null)
+    {
+        $this->finishCalledOnUrlRetriever = true;
     }
 
     protected function setUp()
@@ -122,6 +135,7 @@ HTML;
 
         $this->warmCaches();
 
+        $this->assertTrue( $this->finishCalledOnUrlRetriever );
         $this->assertCount(1, $this->getRequestUrls);
         $this->assertContains('http://example.com/', $this->getRequestUrls);
 
