@@ -10,6 +10,7 @@ class SimpleSiteMapUrlRetriever implements UrlRetriever
     public function get($url)
     {
         $location = self::LOCATION;
+
         return /** @lang XML */
             <<<SITEMAP
 <?xml version="1.0" encoding="UTF-8"?>

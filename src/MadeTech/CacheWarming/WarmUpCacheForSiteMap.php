@@ -1,9 +1,9 @@
 <?php
 namespace MadeTech\CacheWarming;
 
-use MadeTech\CacheWarming\UseCase\WarmUpCacheForSitePresenter;
+use MadeTech\CacheWarming\UseCase\CacheWarmerPresenter;
 
-class WarmUpCacheForSite implements UseCase\WarmUpCacheForSite
+class WarmUpCacheForSiteMap implements UseCase\WarmUpCacheForSiteMap
 {
 
     /** @var  UseCase\GetUrlsFromSiteMap */
@@ -20,11 +20,12 @@ class WarmUpCacheForSite implements UseCase\WarmUpCacheForSite
         $this->warmCacheOfOneUrl = $warmCacheOfOneUrl;
     }
 
-    public function warmUpSiteCache($siteMapUrl, WarmUpCacheForSitePresenter $presenter)
+    public function warmUpSiteCache($siteMapUrl, CacheWarmerPresenter $presenter)
     {
         $urls = $this->getUrlsFromSiteMap->getUrlsFromSiteMap($siteMapUrl);
+        $presenter->presentSiteMapUrls( $siteMapUrl, $urls );
         foreach ($urls as $url) {
-            $presenter->present($url);
+            $presenter->presentVisitedUrl($url);
             $this->warmCacheOfOneUrl->visit($url);
         }
     }
