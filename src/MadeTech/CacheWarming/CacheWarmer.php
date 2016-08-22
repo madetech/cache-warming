@@ -82,7 +82,7 @@ class CacheWarmer
     private function getDomDocument(HrefLangExpansion $hrefLangExpansion)
     {
         $dom = new \DomDocument();
-        $dom->loadHTML($this->getSiteHtml($hrefLangExpansion));
+        @$dom->loadHTML($this->getSiteHtml($hrefLangExpansion), LIBXML_NOWARNING);
 
         return $dom;
     }

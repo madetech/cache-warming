@@ -24,7 +24,8 @@ $run = function () {
             new GetUrlsFromSiteMap($retriever),
             new WarmCacheOfOneUrl($retriever)
         ),
-        new ArrayConfigProvider(require __DIR__ . '/config.php')
+        new ArrayConfigProvider(require __DIR__ . '/config.php'),
+        $retriever
     );
     $cacheWarmer->warmCaches(new EchoingWarmUpCacheForSitePresenter);
 };
