@@ -1,4 +1,6 @@
 <?php
+use MadeTech\CacheWarming\CacheWarmer;
+use MadeTech\CacheWarming\Config\ArrayConfigProvider;
 use MadeTech\CacheWarming\Gateway\FileGetContentsUrlRetriever;
 use MadeTech\CacheWarming\GetUrlsFromSiteMap;
 use MadeTech\CacheWarming\UseCase\WarmUpCacheForSitePresenter;
@@ -17,12 +19,13 @@ class EchoingWarmUpCacheForSitePresenter implements WarmUpCacheForSitePresenter
 
 $run = function () {
     $retriever = new FileGetContentsUrlRetriever;
-    $useCase = new WarmUpCacheForSite(new GetUrlsFromSiteMap($retriever), new WarmCacheOfOneUrl($retriever));
-
-    $sitemaps = require __DIR__ . '/config.php';
-
-    foreach ($sitemaps as $sitemap) {
-        $useCase->warmUpSiteCache($sitemap, new EchoingWarmUpCacheForSitePresenter);
-    }
+    $cacheWarmer = new CacheWarmer(
+        new WarmUpCacheForSite(
+            new GetUrlsFromSiteMap($retriever),
+            new WarmCacheOfOneUrl($retriever)
+        ),
+        new ArrayConfigProvider(require __DIR__ . '/config.php')
+    );
+    $cacheWarmer->warmCaches(new EchoingWarmUpCacheForSitePresenter);
 };
 $run();

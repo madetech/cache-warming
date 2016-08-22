@@ -1,6 +1,8 @@
 <?php
 namespace MadeTech\CacheWarming\Test\Acceptance;
 
+use MadeTech\CacheWarming\CacheWarmer;
+use MadeTech\CacheWarming\Config;
 use MadeTech\CacheWarming\Gateway\FileGetContentsUrlRetriever;
 use MadeTech\CacheWarming\GetUrlsFromSiteMap;
 use MadeTech\CacheWarming\WarmCacheOfOneUrl;
@@ -13,19 +15,20 @@ class CacheWarmingTest extends \PHPUnit_Framework_TestCase
 
     public function setUpSimulatorResponse()
     {
-        $sitemapResource = $this->getSitemapResource();
-        $this->writeResponse($this->replaceDomains($sitemapResource), 'sitemap.xml');
+        $this->setupSiteMap(__DIR__ . '/../resources/dutchSiteMap.xml', 'sitemap2.xml');
+        $this->setupSiteMap(__DIR__ . '/../resources/complexSiteMap.xml', 'sitemap.xml');
+    }
+
+    private function setupSiteMap($siteMapXml, $destination)
+    {
+        $sitemapResource = file_get_contents($siteMapXml);
+        $this->writeResponse($this->replaceDomains($sitemapResource), $destination);
     }
 
     private function replaceDomains($sitemapResource)
     {
         return str_replace('https://example.com', 'http://' . self::$domain,
             $sitemapResource);
-    }
-
-    private function getSitemapResource()
-    {
-        return file_get_contents(__DIR__ . '/../resources/complexSiteMap.xml');
     }
 
     /**
@@ -58,6 +61,30 @@ class CacheWarmingTest extends \PHPUnit_Framework_TestCase
             'gb/en/product/red-fleese/',
             'gb/en/product/blue-trousers/',
             'gb/en/joe/blog-tree/',
+        ]);
+    }
+
+    /** @test * */
+    public function givenBasicArrayConfig_ThenWarmCacheForSiteMap()
+    {
+        $this->setUpSimulatorResponse();
+        $domain = self::$domain;
+        $configuration = new Config\ArrayConfigProvider([
+            "http://$domain/sitemap.xml",
+            "http://$domain/sitemap2.xml",
+        ]);
+        $useCase = $this->getUseCase();
+        $cacheWarmer = new CacheWarmer($useCase, $configuration);
+        $cacheWarmer->warmCaches(new WarmUpCacheForSitePresenterStub);
+        $this->assertRequestsToSimulatorWereMadeOnPaths([
+            'gb/en/',
+            'gb/en/legal/terms/',
+            'gb/en/product/red-fleese/',
+            'gb/en/product/blue-trousers/',
+            'gb/en/joe/blog-tree/',
+            'nl/nl/',
+            'nl/nl/prijzen',
+            'nl/nl/over-ons/',
         ]);
     }
 }

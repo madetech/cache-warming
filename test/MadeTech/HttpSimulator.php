@@ -104,8 +104,9 @@ trait HttpSimulator
 
     protected function assertRequestWasMadeToSimulatorOnPath($expectedPath)
     {
+        $expectedPath = rtrim($expectedPath, '/') . '/';
         $detectRequest = glob($this->getRequestsPath() . $expectedPath . 'request*');
-        \PHPUnit_Framework_Assert::assertCount(1, $detectRequest);
+        \PHPUnit_Framework_Assert::assertCount(1, $detectRequest, "No request was ever made to {$expectedPath}");
     }
 
     protected function assertRequestsToSimulatorWereMadeOnPaths($expectedPaths)
