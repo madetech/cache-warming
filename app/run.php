@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 use MadeTech\CacheWarming\CacheWarmer;
 use MadeTech\CacheWarming\Config\ArrayConfigProvider;
@@ -52,13 +53,22 @@ class EchoingCacheWarmerPresenter implements CacheWarmerPresenter
 }
 
 $run = function () {
+    $argv = $GLOBALS['argv'];
+    $lastArgument = $argv[count($argv)-1];
+
+    if( file_exists( $lastArgument ) && $lastArgument !== __FILE__ ) {
+        $configFile = $lastArgument;
+    } else {
+        $configFile = __DIR__ . '/config.php';
+    }
+
     $retriever = new FileGetContentsUrlRetriever;
     $cacheWarmer = new CacheWarmer(
         new WarmUpCacheForSiteMap(
             new GetUrlsFromSiteMap($retriever),
             new WarmCacheOfOneUrl($retriever)
         ),
-        new ArrayConfigProvider(require __DIR__ . '/config.php'),
+        new ArrayConfigProvider(require $configFile),
         $retriever
     );
     $cacheWarmer->warmCaches(new EchoingCacheWarmerPresenter);

@@ -17,6 +17,9 @@
       "": "src/"
     }
   },
+  "bin": [
+    "app/run.php"
+  ],
   "autoload-dev": {
     "psr-4": {
       "": "test/"
