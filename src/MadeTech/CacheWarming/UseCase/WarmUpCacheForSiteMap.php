@@ -1,7 +1,7 @@
 <?php
 namespace MadeTech\CacheWarming\UseCase;
 
-interface WarmUpCacheForSite
+interface WarmUpCacheForSiteMap
 {
     public function warmUpSiteCache($siteMapUrl, WarmUpCacheForSitePresenter $presenter);
 }

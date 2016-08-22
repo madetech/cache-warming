@@ -5,7 +5,7 @@ namespace MadeTech\CacheWarming\Test\Unit;
 use MadeTech\CacheWarming\Test\Acceptance\WarmUpCacheForSitePresenterStub;
 use MadeTech\CacheWarming\UseCase\GetUrlsFromSiteMap;
 use MadeTech\CacheWarming\UseCase\WarmCacheOfOneUrl;
-use MadeTech\CacheWarming\WarmUpCacheForSite;
+use MadeTech\CacheWarming\WarmUpCacheForSiteMap;
 
 class WarmUpCacheForSiteTest extends \PHPUnit_Framework_TestCase implements WarmCacheOfOneUrl, GetUrlsFromSiteMap
 {
@@ -38,7 +38,7 @@ class WarmUpCacheForSiteTest extends \PHPUnit_Framework_TestCase implements Warm
     /** @test * */
     public function testThatUseCaseIsWiredUpCorrectly()
     {
-        $useCase = new WarmUpCacheForSite($this, $this);
+        $useCase = new WarmUpCacheForSiteMap($this, $this);
 
         $siteMapUrl = 'http://example.com/sitemap';
         $this->toVisit[] = 'http://example.com/a/path/1';

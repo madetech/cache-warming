@@ -3,7 +3,7 @@ namespace MadeTech\CacheWarming;
 
 use MadeTech\CacheWarming\UseCase\WarmUpCacheForSitePresenter;
 
-class WarmUpCacheForSite implements UseCase\WarmUpCacheForSite
+class WarmUpCacheForSiteMap implements UseCase\WarmUpCacheForSiteMap
 {
 
     /** @var  UseCase\GetUrlsFromSiteMap */

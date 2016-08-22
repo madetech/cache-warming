@@ -7,6 +7,6 @@ class FileGetContentsUrlRetriever implements UrlRetriever
 {
     public function get($url)
     {
-        return file_get_contents($url);
+        return @file_get_contents($url);
     }
 }

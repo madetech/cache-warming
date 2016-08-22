@@ -5,7 +5,7 @@ use MadeTech\CacheWarming\Gateway\FileGetContentsUrlRetriever;
 use MadeTech\CacheWarming\GetUrlsFromSiteMap;
 use MadeTech\CacheWarming\UseCase\WarmUpCacheForSitePresenter;
 use MadeTech\CacheWarming\WarmCacheOfOneUrl;
-use MadeTech\CacheWarming\WarmUpCacheForSite;
+use MadeTech\CacheWarming\WarmUpCacheForSiteMap;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -20,7 +20,7 @@ class EchoingWarmUpCacheForSitePresenter implements WarmUpCacheForSitePresenter
 $run = function () {
     $retriever = new FileGetContentsUrlRetriever;
     $cacheWarmer = new CacheWarmer(
-        new WarmUpCacheForSite(
+        new WarmUpCacheForSiteMap(
             new GetUrlsFromSiteMap($retriever),
             new WarmCacheOfOneUrl($retriever)
         ),

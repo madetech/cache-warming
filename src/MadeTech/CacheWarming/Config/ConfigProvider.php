@@ -5,6 +5,9 @@ namespace MadeTech\CacheWarming\Config;
 
 interface ConfigProvider
 {
-    /** @var string */
+    /** @return string[] */
     public function getSiteMapUrls();
+
+    /** @return HrefLangExpansion[] */
+    public function getHrefLangExpansions();
 }
