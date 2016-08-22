@@ -6,10 +6,10 @@ namespace MadeTech\CacheWarming\Test\Unit;
 use MadeTech\CacheWarming\CacheWarmer;
 use MadeTech\CacheWarming\Config\ConfigProvider;
 use MadeTech\CacheWarming\Config\HrefLangExpansion;
-use MadeTech\CacheWarming\Test\Acceptance\WarmUpCacheForSitePresenterStub;
+use MadeTech\CacheWarming\Test\Acceptance\CacheWarmerPresenterStub;
 use MadeTech\CacheWarming\UrlRetriever;
 use MadeTech\CacheWarming\UseCase\WarmUpCacheForSiteMap;
-use MadeTech\CacheWarming\UseCase\WarmUpCacheForSitePresenter;
+use MadeTech\CacheWarming\UseCase\CacheWarmerPresenter;
 
 class CacheWarmerTest extends \PHPUnit_Framework_TestCase implements WarmUpCacheForSiteMap, ConfigProvider, UrlRetriever
 {
@@ -29,7 +29,7 @@ class CacheWarmerTest extends \PHPUnit_Framework_TestCase implements WarmUpCache
     /** @var string[] */
     private $getRequestUrls = [];
 
-    public function warmUpSiteCache($siteMapUrl, WarmUpCacheForSitePresenter $presenter)
+    public function warmUpSiteCache($siteMapUrl, CacheWarmerPresenter $presenter)
     {
         $this->siteMapUrls[] = $siteMapUrl;
     }
@@ -48,7 +48,7 @@ class CacheWarmerTest extends \PHPUnit_Framework_TestCase implements WarmUpCache
 
     private function warmCaches()
     {
-        $this->useCase->warmCaches(new WarmUpCacheForSitePresenterStub);
+        $this->useCase->warmCaches(new CacheWarmerPresenterStub);
     }
 
     private function assertSiteMapWasUsed($expected)

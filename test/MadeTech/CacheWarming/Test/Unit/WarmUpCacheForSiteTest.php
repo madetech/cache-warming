@@ -2,7 +2,7 @@
 
 namespace MadeTech\CacheWarming\Test\Unit;
 
-use MadeTech\CacheWarming\Test\Acceptance\WarmUpCacheForSitePresenterStub;
+use MadeTech\CacheWarming\Test\Acceptance\CacheWarmerPresenterStub;
 use MadeTech\CacheWarming\UseCase\GetUrlsFromSiteMap;
 use MadeTech\CacheWarming\UseCase\WarmCacheOfOneUrl;
 use MadeTech\CacheWarming\WarmUpCacheForSiteMap;
@@ -45,7 +45,7 @@ class WarmUpCacheForSiteTest extends \PHPUnit_Framework_TestCase implements Warm
         $this->toVisit[] = 'http://example.com/a/path/1';
         $this->toVisit[] = 'http://example.com/a/path/2';
 
-        $useCase->warmUpSiteCache($siteMapUrl, new WarmUpCacheForSitePresenterStub);
+        $useCase->warmUpSiteCache($siteMapUrl, new CacheWarmerPresenterStub);
 
         $this->assertEquals($siteMapUrl, $this->siteMapUrl);
         $this->assertEquals($this->toVisit, $this->visited);

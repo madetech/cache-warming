@@ -29,9 +29,10 @@ class CacheWarmer
         $this->urlRetriever = $urlRetriever;
     }
 
-    public function warmCaches(UseCase\WarmUpCacheForSitePresenter $presenter)
+    public function warmCaches(UseCase\CacheWarmerPresenter $presenter)
     {
         $siteMaps = $this->getSiteMaps();
+        $presenter->presentSiteMaps($siteMaps);
         foreach ($siteMaps as $siteMap) {
             $this->warmUpCacheForSite->warmUpSiteCache($siteMap, $presenter);
         }

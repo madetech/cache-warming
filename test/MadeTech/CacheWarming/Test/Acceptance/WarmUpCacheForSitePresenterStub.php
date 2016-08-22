@@ -1,11 +1,20 @@
 <?php
 namespace MadeTech\CacheWarming\Test\Acceptance;
 
-use MadeTech\CacheWarming\UseCase\WarmUpCacheForSitePresenter;
+use MadeTech\CacheWarming\UseCase\CacheWarmerPresenter;
 
-class WarmUpCacheForSitePresenterStub implements WarmUpCacheForSitePresenter
+class CacheWarmerPresenterStub implements CacheWarmerPresenter
 {
-    public function present($url)
+    public function presentVisitedUrl($url)
     {
+    }
+
+    public function presentSiteMaps($siteMaps)
+    {
+    }
+
+    public function presentSiteMapUrls($siteMapUrl, $urls)
+    {
+
     }
 }

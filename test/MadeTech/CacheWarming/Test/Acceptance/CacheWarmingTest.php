@@ -45,7 +45,7 @@ class CacheWarmingTest extends \PHPUnit_Framework_TestCase
     public function warmUpSiteCache($domain)
     {
         $useCase = $this->getWarmUpCacheForSiteMap();
-        $useCase->warmUpSiteCache("http://$domain/sitemap.xml", new WarmUpCacheForSitePresenterStub);
+        $useCase->warmUpSiteCache("http://$domain/sitemap.xml", new CacheWarmerPresenterStub);
     }
 
     /**
@@ -59,7 +59,7 @@ class CacheWarmingTest extends \PHPUnit_Framework_TestCase
     private function warmCaches($configuration)
     {
         (new CacheWarmer($this->getWarmUpCacheForSiteMap(), $configuration, $this->retriever))
-            ->warmCaches(new WarmUpCacheForSitePresenterStub);
+            ->warmCaches(new CacheWarmerPresenterStub);
     }
 
     protected function setUp()
