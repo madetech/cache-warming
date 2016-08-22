@@ -8,7 +8,9 @@ use MadeTech\CacheWarming\UseCase\CacheWarmerPresenter;
 use MadeTech\CacheWarming\WarmCacheOfOneUrl;
 use MadeTech\CacheWarming\WarmUpCacheForSiteMap;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+if(!defined('COMPOSER_LOADED') || !COMPOSER_LOADED) {
+    require_once __DIR__ . '/../vendor/autoload.php';
+}
 
 class EchoingCacheWarmerPresenter implements CacheWarmerPresenter
 {
