@@ -101,4 +101,17 @@ trait HttpSimulator
             $i++;
         }
     }
+
+    protected function assertRequestWasMadeToSimulatorOnPath($expectedPath)
+    {
+        $detectRequest = glob($this->getRequestsPath() . $expectedPath . 'request*');
+        \PHPUnit_Framework_Assert::assertCount(1, $detectRequest);
+    }
+
+    protected function assertRequestsToSimulatorWereMadeOnPaths($expectedPaths)
+    {
+        foreach ($expectedPaths as $expectedPath) {
+            $this->assertRequestWasMadeToSimulatorOnPath($expectedPath);
+        }
+    }
 }
