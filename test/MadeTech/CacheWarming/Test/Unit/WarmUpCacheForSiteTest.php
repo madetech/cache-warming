@@ -27,6 +27,7 @@ class WarmUpCacheForSiteTest extends \PHPUnit_Framework_TestCase implements Warm
     public function getUrlsFromSiteMap($siteMapUrl)
     {
         $this->siteMapUrl = $siteMapUrl;
+
         return $this->toVisit;
     }
 
@@ -46,7 +47,7 @@ class WarmUpCacheForSiteTest extends \PHPUnit_Framework_TestCase implements Warm
 
         $useCase->warmUpSiteCache($siteMapUrl, new WarmUpCacheForSitePresenterStub);
 
-        $this->assertEquals( $siteMapUrl, $this->siteMapUrl );
-        $this->assertEquals( $this->toVisit, $this->visited );
+        $this->assertEquals($siteMapUrl, $this->siteMapUrl);
+        $this->assertEquals($this->toVisit, $this->visited);
     }
 }

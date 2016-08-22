@@ -17,13 +17,13 @@ class ArrayConfigProvider implements ConfigProvider
     /** @return string[] */
     public function getSiteMapUrls()
     {
-        return array_values( array_filter($this->config, 'is_string') );
+        return array_values(array_filter($this->config, 'is_string'));
     }
 
     /** @return HrefLangExpansion[] */
     public function getHrefLangExpansions()
     {
-        return array_values( array_filter($this->config, [$this, 'isHrefLangExpansion']) );
+        return array_values(array_filter($this->config, [$this, 'isHrefLangExpansion']));
     }
 
     private function isHrefLangExpansion($item)

@@ -7,6 +7,6 @@ class ComplexSiteMapUrlRetriever implements UrlRetriever
 {
     public function get($url)
     {
-        return file_get_contents( __DIR__.'/../resources/complexSiteMap.xml' );
+        return file_get_contents(__DIR__ . '/../resources/complexSiteMap.xml');
     }
 }
